@@ -14,8 +14,8 @@ selecao cria(){
   return ret;
 }
 
-int find_best(selecao* times){
-  int melhor;
+int find_best(selecao *times){
+  int melhor = 0;
   for(int i = 1; i < 4; ++i){
     if(times[i].pts > times[melhor].pts)  melhor = i;
     else if(times[i].pts > times[melhor].pts){
@@ -28,19 +28,9 @@ int find_best(selecao* times){
   return melhor;
 }
 
-int main(int argc, char const *argv[]) {
-  char entrada[100];
-  scanf("%s", entrada);
-  FILE *in = fopen(entrada, "r");
-  FILE *out = fopen("saida.txt", "w");
-
-  selecao times[4];
-  int aux[2], idx[2], melhor = 0;
+void read_file(FILE *in, selecao* times){
+  int aux[2], idx[2];
   char aus[2][100];
-
-  for(int i = 0; i < 4; ++i)  times[i] = cria();
-
-  printf("ok\n");
   for(int i = 0; i < 6; ++i){
     fscanf(in, "%s %d %s %d", aus[0], &aux[0], aus[1], &aux[1]);
 
@@ -69,6 +59,21 @@ int main(int argc, char const *argv[]) {
     else  ++times[idx[0]].pts, ++times[idx[1]].pts;
 
   }
+}
+
+int main(int argc, char const *argv[]) {
+  char entrada[100];
+  scanf("%s", entrada);
+  FILE *in = fopen(entrada, "r");
+  FILE *out = fopen("saida.txt", "w");
+
+  selecao times[4];
+  int melhor = 0;
+
+  for(int i = 0; i < 4; ++i)  times[i] = cria();
+
+  read_file(in, times);
+
   melhor = find_best(times);
   printf("%s\t%d\t%d\t%d\t%d\n", times[melhor].nome, times[melhor].marca, times[melhor].receb, times[melhor].marca - times[melhor].receb, times[melhor].pts);
   for(int i = 0; i < 4; ++i)
