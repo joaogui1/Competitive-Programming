@@ -1,6 +1,0 @@
-russia 3 arabia 1
-egito 1 uruguai 2
-russia 1 egito 1
-uruguai 3 arabia 0
-uruguai 2 russia 1
-arabia 1 egito 2
