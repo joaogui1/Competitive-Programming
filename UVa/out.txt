@@ -1,0 +1,36 @@
+Tile #1
+Wasted Space = 0.00 %
+
+Tile #2
+Wasted Space = 0.00 %
+
+Tile #3
+Wasted Space = 0.00 %
+
+Tile #4
+Wasted Space = 18.52 %
+
+Tile #5
+Wasted Space = 18.52 %
+
+Tile #6
+Wasted Space = 42.78 %
+
+Tile #7
+Wasted Space = 42.78 %
+
+Tile #8
+Wasted Space = 0.00 %
+
+Tile #9
+Wasted Space = 0.00 %
+
+Tile #10
+Wasted Space = 0.00 %
+
+Tile #11
+Wasted Space = 50.61 %
+
+Tile #12
+Wasted Space = 33.30 %
+
