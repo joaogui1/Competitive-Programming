@@ -5,10 +5,10 @@ typedef long long int ll;
 
 int sta, end, n;
 ll dp[5000][5000], x[5000], inleft[5000], inright[5000], outleft[5000], outright[5000];
-static ll INF = 1e16;
+static ll INF = 1e18;
 
 
-ll f(int i, int k){
+ll f(int i, ll k){
   if(k < 0) return INF;
   if(i == n - 1){
     if(k != 0)  return INF;
@@ -24,13 +24,20 @@ ll f(int i, int k){
   if(ret != -1) return ret;
   ret = INF;
 
-  ret = std::min(ret, f(i + 1, k + 1) + (i != sta)*inright[i] + (i!= end)*outright[i] - (i == sta || i == end ? x[i] : 2*x[i]));
-  if(i != sta && k + ks > 0)  ret = std::min(ret, f(i + 1, i == end ? k - 1: k) + inleft[i] + outright[i]) + (i == end ? x[i] : 0);
-  if(i != end && k + ke > 0) ret = std::min(ret, f(i + 1, i == sta ? k - 1: k) + inright[i] + outleft[i]) + (i == sta ? x[i] : 0);
+  if(i == sta){
+    ret = std::min(ret, f(i + 1, k) + outright[i] - x[i]);
+    ret = std::min(ret, f(i + 1, k - 1) + outleft[i] + x[i]);
+  }
+  if(i == end){
+    ret = std::min(ret, f(i + 1, k) + inright[i] - x[i]);
+    ret = std::min(ret, f(i + 1, k - 1) + inleft[i] + x[i]);
+  }
   if(i != sta && i != end){
-    if(k == 0 && ks*ke == 0)  return ret;
-    else  if  (k == 1 && ks + ke == 0)  return ret;
-    else  ret = std::min(ret, f(i + 1, k - 1) + inleft[i] + outleft[i] + 2*x[i]);
+    ret = std::min(ret, f(i + 1, k + 1) + inright[i] + outright[i] - 2*x[i]);
+    if(k + ks)  ret = std::min(ret, f(i + 1, k) + inleft[i] + outright[i]);
+    if(k + ke)  ret = std::min(ret, f(i + 1, k) + inright[i] + outleft[i]);
+    if(k > 1)  ret = std::min(ret, f(i + 1, k - 1) + inleft[i] + outleft[i] + 2*x[i]);
+    if(k > 0 && (ke || ks))  ret = std::min(ret, f(i + 1, k - 1) + inleft[i] + outleft[i] + 2*x[i]);
   }
 
   return ret;
@@ -43,13 +50,10 @@ int main(){
   std::cin >> n >> sta >> end;
   --sta, --end;
   for(int i = 0; i < n; ++i)  std::cin >> x[i];
-  for(int i = 0; i < n; ++i)  std::cin >> inright[i];
   for(int i = 0; i < n; ++i)  std::cin >> inleft[i];
+  for(int i = 0; i < n; ++i)  std::cin >> inright[i];
   for(int i = 0; i < n; ++i)  std::cin >> outleft[i];
   for(int i = 0; i < n; ++i)  std::cin >> outright[i];
-
-  inleft[sta] = inright[sta] = 0;
-  outleft[end] = outright[end] = 0;
 
   std::cout << f(0, 0) << "\n";
 
