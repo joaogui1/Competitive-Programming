@@ -1,33 +1,37 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+typedef long long int ll;
 
-string s;
-set <string> ans;
+int mark[16];
 
-void f(){
-  string ret = "";
-  for(int i = 0; i < (1 << s.size()); ++i){
-    ret = "";
-    for(int j = 0; j < s.size(); ++j){
-      if(i & (1 << j))
-        ret = s[j] + ret;
-      else  ret += s[j];
-    }
-    //cout << ret << endl;
-    ans.insert(ret);
-  }
+void mrk(ll x){
+  for(; x > 0; x /= 10LL)
+    mark[x % 10] = 1;
+  return;
 }
+
 int main(){
   ios_base::sync_with_stdio(0);
   int t;
+  ll n;
   cin >> t;
-  for(int q = 1; q <= t; ++q){
-    ans.clear();
-    cin >> s;
-    f();
-    //cout << ans.size() << endl;
-    cout << "Case #" << q << ": " << *(--ans.end()) << "\n";
+  for(int i = 1; i <= t; ++i){
+    cin >> n;
+    memset(mark, 0, sizeof mark);
+    cout << "Case #" << i << ": ";
+    for(ll j = 1; j <= 10000000LL; ++j){
+      mrk(j*n);
+      for(int k = 0; k <= 9; ++k){
+        if(mark[k] == 0)  break;
+        else if(k == 9){
+          cout << j*n << "\n";
+          j = 10000001LL;
+          break;
+        }
+      }
+      if(j == 10000000LL) cout << "INSOMNIA\n";
+    }
   }
 
 
