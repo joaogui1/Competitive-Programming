@@ -31,8 +31,20 @@ int main(){
           if(!dp[i][j][k][m]) continue;
           //primeiro tentamos preencher um dos fins
           if(m < 2 && k + aux*(2*j - m - 1) <= l){
-            if(i == n - 1)
+            if(i == n - 1){
+                dp[i + 1][j][k + aux*(2*j - m - 1)][m + 1] = (dp[i + 1][j][k + diff*(2*j - m - 1)][m + 1] + dp[i][j][k][m]*(2-z)*j)%MOD;
+            }
+            else if(m == 0 || j > 1){
+              dp[i + 1][j][k + diff*(2*j - m - 1)][m + 1] = (dp[i + 1][j][k + diff*(2*j - m - 1)][m + 1] + dp[i][j][k][m]*(2 - m)*(j - m))%MOD;
+            }
+            if(k + aux*(2*j - m + 1) <= l){
+              dp[i + 1][j + 1][k + aux*(2*j - m + 1)][m + 1] = (dp[i + 1][j + 1][k + diff*(2*j - m + 1)][m + 1] + dp[i][j][k][m]*(2 - m))%MOD;
+            }
           }
+
+          if(k + diff*(2*j - m) <= l){
+						dp[i + 1][j][k + diff*(2*j - m)][m] = (dp[i + 1][j][k + diff*(2*j - m)][m] + dp[i][j][k][m]*(2*j - m))%MOD;  
+					}
         }
       }
     }
